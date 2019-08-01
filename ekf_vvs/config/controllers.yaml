@@ -1,0 +1,59 @@
+fkuka_lwr4p:
+  chain_base: "fkuka_lwr4p_base_link"  # base of the controlled kinematic chain
+  chain_tip: "fkuka_lwr4p_A6"  # tip of the controlled kinematic chain
+  gravity: [0, 0, -9.806]  # gravity acceleration in chain_base frame
+  publish_rate: 100  # rate used to publish some feedback from the control blocks
+  max_elapsed_time: 1  # maximum period between command messages
+
+  velocity_controller:
+    type: inverse_dynamics_controllers/VelocityController
+    gain: 50.0
+
+  joint_state_controller:
+    type: "joint_state_controller/JointStateController"
+    publish_rate: 1000
+    
+  joint_trajectory_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - fkuka_lwr4p_a1_joint
+      - fkuka_lwr4p_a2_joint
+      - fkuka_lwr4p_e1_joint
+      - fkuka_lwr4p_a3_joint
+      - fkuka_lwr4p_a4_joint
+      - fkuka_lwr4p_a5_joint
+      - fkuka_lwr4p_a6_joint
+      
+  joint_group_velocity_controller:
+    type: "velocity_controllers/JointGroupVelocityController"
+    joints:
+      - fkuka_lwr4p_a1_joint
+      - fkuka_lwr4p_a2_joint
+      - fkuka_lwr4p_e1_joint
+      - fkuka_lwr4p_a3_joint
+      - fkuka_lwr4p_a4_joint
+      - fkuka_lwr4p_a5_joint
+      - fkuka_lwr4p_a6_joint
+      
+  position_controller:
+    type: position_controllers/JointGroupPositionController
+    joints:
+      - fkuka_lwr4p_a1_joint
+      - fkuka_lwr4p_a2_joint
+      - fkuka_lwr4p_e1_joint
+      - fkuka_lwr4p_a3_joint
+      - fkuka_lwr4p_a4_joint
+      - fkuka_lwr4p_a5_joint
+      - fkuka_lwr4p_a6_joint
+    fkuka_lwr4p_a1_joint/pid: {p: 100.0, i: 0.01, d: 1.0}
+    fkuka_lwr4p_a2_joint/pid: {p: 100.0, i: 0.01, d: 1.0}
+    fkuka_lwr4p_e1_joint/pid: {p: 100.0, i: 0.01, d: 1.0}
+    fkuka_lwr4p_a3_joint/pid: {p: 100.0, i: 0.01, d: 1.0}
+    fkuka_lwr4p_a4_joint/pid: {p: 100.0, i: 0.01, d: 1.0}
+    fkuka_lwr4p_a5_joint/pid: {p: 100.0, i: 0.01, d: 1.0}
+    fkuka_lwr4p_a6_joint/pid: {p: 100.0, i: 0.01, d: 1.0}
+
+    
+    
+    
+

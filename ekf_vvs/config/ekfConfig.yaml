@@ -1,0 +1,38 @@
+endEffectorName : fkuka_lwr4p_a6_joint
+modelPath : /home/valentinohx/programming/ros/src/kuka_sim/ekf_vvs/robot_model/fkuka_lwr4p_world_robot.urdf
+lamda : 0.5
+dt : 0.04   #0.04  0.0009   0.016 corresponds to 64Hz
+Z_star : 1.0
+ZInLoop : 1
+xyInLoop : 1
+camFrame : /camera_link
+itermax : 20000000
+
+alpha_xy : 0.0e-5
+alpha_q :  0.0e-5
+alpha_Z :  0.0e-5
+
+beta_q  :  1.0e-3
+#
+#gama_xy  : 1.408e-5
+#gama_q  :  1.0e-5
+#
+#pp_xy :    1.0e-3
+#pp_q :     1.0e-3
+#pp_Z :     1.0e-3
+
+gama_xy  : 1.408e-5
+gama_q  :  0.0e-6
+
+pp_xy :    1.408e-4
+pp_q :     1.0e-4
+pp_Z :     1.0e-5
+
+#beta_q  :  1.0e-4
+#
+#gama_xy  : 0.7e-5
+#gama_q  :  0.5e-5
+#
+#pp_xy :    1.0e-5
+#pp_q :     1.0e-5
+#pp_Z :     1.0e-5

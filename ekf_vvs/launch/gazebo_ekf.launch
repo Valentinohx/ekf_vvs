@@ -1,0 +1,50 @@
+<launch>
+   
+   <param name=" /use_sim_time" type="bool" value="true" />
+   
+	<!-- Load the URDF description -->
+  <param name="robot_description" command="$(find xacro)/xacro $(find fkuka_lwr4p_description_ekf)/urdf/fkuka_lwr4p_world.xacro --inorder" />
+  
+<!-- Hardware configuration -->
+  <rosparam command="load" file="$(find fkuka_lwr4p_gazebosim)/config/lwr_hw_cfg.yaml"/>
+
+  <!-- Controllers -->
+  <rosparam command="load" file="$(find ekf_vvs)/config/controllers.yaml"/>
+  <node name="kuka_controller_spawner" pkg="controller_manager" type="spawner" args="joint_state_controller velocity_controller" ns="fkuka_lwr4p" />
+
+	<!-- Launch Gazebo with empty world -->
+	<node name="gazebo" pkg="gazebo_ros" type="gzserver" respawn="false" output="screen" args="-u $(find fkuka_lwr4p_gazebosim)/world/empty.world"/>
+    <node name="gazebo_gui" pkg="gazebo_ros" type="gzclient" respawn="false" output="screen"/>
+
+	<!-- Call a python script to the run a service call to gazebo_ros to spawn a URDF robot -->
+	<node name="kuka_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"	args="-urdf -model KUKA_LWR4P -param robot_description
+                -J fkuka_lwr4p_a1_joint 0.79
+                -J fkuka_lwr4p_a2_joint 0.48
+                -J fkuka_lwr4p_e1_joint -0.0007
+                -J fkuka_lwr4p_a3_joint -0.754
+                -J fkuka_lwr4p_a4_joint 0.2
+                -J fkuka_lwr4p_a5_joint 0.508
+                -J fkuka_lwr4p_a6_joint 0.001
+                -paused"/>
+
+  <!--                -J fkuka_lwr4p_a1_joint 0.79-->
+  <!--                -J fkuka_lwr4p_a2_joint 0.38-->
+  <!--                -J fkuka_lwr4p_e1_joint -0.0007 -->
+  <!--                -J fkuka_lwr4p_a3_joint -0.954-->
+  <!--                -J fkuka_lwr4p_a4_joint 0.2 -->
+  <!--                -J fkuka_lwr4p_a5_joint 0.608-->
+  <!--                -J fkuka_lwr4p_a6_joint 0.001 -->
+                
+  <!-- launch RViz and robot state publisher node -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value="false"/>
+    <rosparam param="source_list"> ["fkuka_lwr4p/joint_states"]</rosparam>
+    <rosparam param="rate"> 1000 </rosparam>
+  </node>
+  
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+    <!-- remap from="joint_states" to ="fkuka_lwr4p/joint_states"/ -->
+  </node>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find fkuka_lwr4p_description_ekf)/rviz/urdf.rviz" required="true" />
+
+</launch>

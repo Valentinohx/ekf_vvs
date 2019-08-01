@@ -1,0 +1,17 @@
+<launch>
+
+<include file="$(find ekf_vvs)/launch/gazebo_ekf.launch">
+</include>
+
+<rosparam command="load" file="$(find ekf_vvs)/config/ekfConfig.yaml" />
+<node pkg="ekf_vvs" type="ellipse_tracking_sim_node" name="ellipse_tracking_sim_node" output="screen"/>
+
+
+
+<node pkg="ekf_vvs" type="VS_with_ekf_cam_frame_node" name="VS_with_ekf_cam_frame_node" output="screen"/>
+
+<!--<node pkg="ekf_vvs" type="VS_sensor_fusion_node" name="VS_sensor_fusion_node" output="screen"/>-->
+
+
+</launch>
+
